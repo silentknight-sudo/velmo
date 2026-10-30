@@ -1,0 +1,6 @@
+project_id = "ywanozywaivpbfamgugi"
+
+# The site calls this function with a publishable key, which is not a JWT,
+# so the gateway's JWT check must be off. The function validates input itself.
+[functions.submit-lead]
+verify_jwt = false

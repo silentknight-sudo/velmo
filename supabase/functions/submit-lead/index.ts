@@ -157,7 +157,9 @@ edgeRuntime.Deno.serve(async (request: Request) => {
   }
 
   const supabaseUrl = edgeRuntime.Deno.env.get('SUPABASE_URL');
-  const serviceRoleKey = edgeRuntime.Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+  // Newer projects inject a `sb_secret_` key; older ones a JWT service-role key.
+  const serviceRoleKey = edgeRuntime.Deno.env.get('SUPABASE_SECRET_KEY')
+    || edgeRuntime.Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
   if (!supabaseUrl || !serviceRoleKey) {
     console.error('Lead endpoint is missing Supabase server configuration.');
     return jsonResponse(500, { accepted: false, error: 'Lead storage is not configured.' }, origin);
@@ -169,7 +171,7 @@ edgeRuntime.Deno.serve(async (request: Request) => {
       method: 'POST',
       headers: {
         apikey: serviceRoleKey,
-        Authorization: `Bearer ${serviceRoleKey}`,
+        ...(serviceRoleKey.startsWith('sb_') ? {} : { Authorization: `Bearer ${serviceRoleKey}` }),
         'Content-Type': 'application/json',
         Prefer: 'return=representation',
       },

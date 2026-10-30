@@ -26,17 +26,22 @@ export interface LeadSubmissionResult {
 
 export async function submitLead(lead: LeadSubmission): Promise<LeadSubmissionResult> {
   const supabaseUrl = import.meta.env.VITE_SUPABASE_URL?.trim();
-  const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY?.trim();
+  // Accepts the newer `sb_publishable_` key or a legacy JWT-format anon key.
+  const supabaseKey = (
+    import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || import.meta.env.VITE_SUPABASE_ANON_KEY
+  )?.trim();
 
   // If Supabase is configured with real credentials, submit to remote edge function
-  if (supabaseUrl && supabaseAnonKey) {
+  if (supabaseUrl && supabaseKey) {
+    // Publishable keys are not JWTs, so they only go in the apikey header.
+    const isLegacyJwt = !supabaseKey.startsWith('sb_');
     try {
       const response = await fetch(`${supabaseUrl.replace(/\/+$/, '')}/functions/v1/submit-lead`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          apikey: supabaseAnonKey,
-          Authorization: `Bearer ${supabaseAnonKey}`,
+          apikey: supabaseKey,
+          ...(isLegacyJwt ? { Authorization: `Bearer ${supabaseKey}` } : {}),
         },
         body: JSON.stringify(lead),
       });

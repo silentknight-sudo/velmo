@@ -36,14 +36,15 @@ Quote requests from both quote forms are submitted to a Supabase Edge Function. 
    - `LEAD_FROM_EMAIL`: verified sender, such as `VELMO Leads <leads@yourdomain.com>`.
    - `ALLOWED_ORIGINS`: comma-separated allowed website origins, for example `https://yourdomain.com,http://localhost:3000`.
 
-   Supabase provides `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` to deployed Edge Functions. For local function development, provide those two values in an untracked local secrets file instead.
+   Supabase provides `SUPABASE_URL` and `SUPABASE_SECRET_KEY` (or the legacy `SUPABASE_SERVICE_ROLE_KEY`) to deployed Edge Functions. For local function development, provide those two values in an untracked local secrets file instead.
 5. Deploy the lead endpoint:
    ```sh
    supabase functions deploy submit-lead
    ```
+   `supabase/config.toml` turns off the gateway JWT check for this function, because the site calls it with a publishable key. If you deploy from the dashboard instead, turn off **Verify JWT with legacy secret** for the function.
 6. For local website development, copy `.env.example` to `.env.local` and set:
    - `VITE_SUPABASE_URL`: the Supabase project URL.
-   - `VITE_SUPABASE_ANON_KEY`: the project's public JWT-format `anon` key (not the service-role key).
+   - `VITE_SUPABASE_PUBLISHABLE_KEY`: the project's `sb_publishable_...` key (not the secret key). Older projects can set `VITE_SUPABASE_ANON_KEY` to the JWT-format `anon` key instead.
 
    Set the same two public Vite variables in the website host's environment settings before building/deploying the website. These values are intentionally public; RLS prevents them from reading the leads table. Do not use the service-role key here.
 7. Create the designated staff account in **Supabase → Authentication → Users**. To authorize that account to read leads, find its user UUID and run in the Supabase SQL Editor:
