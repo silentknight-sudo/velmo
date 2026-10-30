@@ -1,0 +1,93 @@
+/**
+ * VELMO Architectural Elevators — Design Tokens
+ * Master design token dictionary establishing strict type scale,
+ * brand color harmonies, spacing grid, radii, and container constraints.
+ */
+
+:root {
+  /* ==========================================================================
+     1. COLOR PALETTE TOKENS
+     ========================================================================== */
+  --color-velmo-forest: #1B3B33;
+  --color-velmo-forest-dark: #122621;
+  --color-velmo-forest-deep: #0D1C18;
+  --color-velmo-forest-light: #2A544A;
+
+  --color-velmo-gold: #B8923D;
+  --color-velmo-gold-hover: #CBA44E;
+  --color-velmo-gold-champagne: #E6D2A8;
+  --color-velmo-gold-muted: rgba(184, 146, 61, 0.4);
+
+  --color-velmo-cream: #F7F5EF;
+  --color-velmo-cream-surface: #FFFFFF;
+  --color-velmo-cream-muted: #ECE9DE;
+
+  --color-velmo-charcoal: #111111;
+  --color-velmo-text-body: #2B3834;
+  --color-velmo-text-muted: #5A6964;
+
+  /* ==========================================================================
+     2. STRICT TYPOGRAPHIC SCALE (px & rem)
+     Harmonious modular scale: 12, 14, 15, 16, 18, 24, 32, 48, 64
+     ========================================================================== */
+  --font-family-serif: "Cormorant Garamond", Georgia, serif;
+  --font-family-sans: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --font-family-mono: "Space Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Font sizes with matching calibrated line-heights */
+  --text-label-mono: 12px;
+  --lh-label-mono: 16px;
+
+  --text-sm: 14px;
+  --lh-sm: 20px;
+
+  --text-body: 15px;
+  --lh-body: 24px;
+
+  --text-base: 16px;
+  --lh-base: 26px;
+
+  --text-lg: 18px;
+  --lh-lg: 28px;
+
+  --text-xl: 24px;
+  --lh-xl: 32px;
+
+  --text-2xl: 32px;
+  --lh-2xl: 40px;
+
+  --text-3xl: 48px;
+  --lh-3xl: 54px;
+
+  --text-4xl: 64px;
+  --lh-4xl: 70px;
+
+  /* ==========================================================================
+     3. SPACING & GRID (8px baseline system)
+     ========================================================================== */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  /* ==========================================================================
+     4. ELEVATION, RADII & BOUNDS
+     ========================================================================== */
+  --radius-none: 0px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  --container-max: 1280px;
+  --min-tap-target: 44px;
+}

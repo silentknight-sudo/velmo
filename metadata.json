@@ -1,0 +1,6 @@
+{
+  "name": "VELMO Elevators | Engineered Architectural Lifts",
+  "description": "Bespoke passenger, home, and panoramic capsule elevators engineered with European EN 81 compliance, whisper-quiet gearless PMSM drives, and architectural brass craftsmanship.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
