@@ -24,57 +24,41 @@ export interface LeadSubmissionResult {
   notificationStatus: 'sent' | 'not_configured' | 'failed' | 'skipped';
 }
 
+// Public project settings used when the host does not provide VITE_ variables. The
+// publishable key is meant to be public: row-level security keeps the leads table private.
+const DEFAULT_SUPABASE_URL = 'https://ywanozywaivpbfamgugi.supabase.co';
+const DEFAULT_SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_jRFm4PMi7CYqjBHzcX4NKA_Cv1GJqrq';
+
 export async function submitLead(lead: LeadSubmission): Promise<LeadSubmissionResult> {
-  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL?.trim();
+  const supabaseUrl = (import.meta.env.VITE_SUPABASE_URL || DEFAULT_SUPABASE_URL).trim();
   // Accepts the newer `sb_publishable_` key or a legacy JWT-format anon key.
   const supabaseKey = (
-    import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || import.meta.env.VITE_SUPABASE_ANON_KEY
-  )?.trim();
+    import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY
+    || import.meta.env.VITE_SUPABASE_ANON_KEY
+    || DEFAULT_SUPABASE_PUBLISHABLE_KEY
+  ).trim();
 
-  // If Supabase is configured with real credentials, submit to remote edge function
-  if (supabaseUrl && supabaseKey) {
-    // Publishable keys are not JWTs, so they only go in the apikey header.
-    const isLegacyJwt = !supabaseKey.startsWith('sb_');
-    try {
-      const response = await fetch(`${supabaseUrl.replace(/\/+$/, '')}/functions/v1/submit-lead`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          apikey: supabaseKey,
-          ...(isLegacyJwt ? { Authorization: `Bearer ${supabaseKey}` } : {}),
-        },
-        body: JSON.stringify(lead),
-      });
-
-      const result = (await response.json().catch(() => null)) as LeadSubmissionResult | null;
-      if (response.ok && result?.accepted) {
-        return result;
-      }
-      console.warn('[VELMO] Supabase edge function returned an error, falling back to local lead storage.');
-    } catch (err) {
-      console.warn('[VELMO] Supabase connection failed, saving lead locally:', err);
-    }
-  }
-
-  // Graceful local mock storage fallback for preview/development in AI Studio
-  const generatedId = `VLM-${Date.now().toString(36).toUpperCase()}-${Math.floor(100 + Math.random() * 900)}`;
+  // Publishable keys are not JWTs, so they only go in the apikey header.
+  const isLegacyJwt = !supabaseKey.startsWith('sb_');
   try {
-    const existingRaw = localStorage.getItem('velmo_quote_leads');
-    const existing = existingRaw ? JSON.parse(existingRaw) : [];
-    existing.push({
-      ...lead,
-      id: generatedId,
-      submittedAt: new Date().toISOString(),
+    const response = await fetch(`${supabaseUrl.replace(/\/+$/, '')}/functions/v1/submit-lead`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        apikey: supabaseKey,
+        ...(isLegacyJwt ? { Authorization: `Bearer ${supabaseKey}` } : {}),
+      },
+      body: JSON.stringify(lead),
     });
-    localStorage.setItem('velmo_quote_leads', JSON.stringify(existing));
-  } catch (storageErr) {
-    console.warn('[VELMO] Could not write to localStorage:', storageErr);
-  }
 
-  return {
-    accepted: true,
-    saved: true,
-    leadId: generatedId,
-    notificationStatus: 'not_configured',
-  };
+    const result = (await response.json().catch(() => null)) as LeadSubmissionResult | null;
+    if (response.ok && result?.accepted) {
+      return result;
+    }
+    console.error('[VELMO] Lead submission was rejected with status:', response.status);
+  } catch (err) {
+    console.error('[VELMO] Lead submission request failed:', err);
+  }
+  // The lead did not reach the server, so tell the visitor instead of reporting success.
+  throw new Error('We could not submit your request. Please try again, or call us directly.');
 }
