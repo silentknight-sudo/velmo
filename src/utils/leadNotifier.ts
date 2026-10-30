@@ -3,9 +3,9 @@
  * Dispatches a formatted, structured lead summary to the designated company phone number.
  */
 
-// Target phone number to receive lead notifications (8882167309 with country code 91)
-export const NOTIFICATION_RECIPIENT_PHONE = "918882167309";
-export const NOTIFICATION_DISPLAY_PHONE = "+91 8882167309";
+// Target phone number to receive lead notifications (9643434838 with country code 91)
+export const NOTIFICATION_RECIPIENT_PHONE = "919643434838";
+export const NOTIFICATION_DISPLAY_PHONE = "+91-9643434838";
 
 export interface StructuredLeadData {
   fullName: string;

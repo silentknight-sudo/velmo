@@ -62,18 +62,18 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuote }) => {
           {/* Col 4: Contact & Facilities */}
           <div className="lg:col-span-4 space-y-4">
             <h4 className="text-xs uppercase tracking-widest font-mono text-[#E6D2A8] font-semibold">
-              Engineering Facilities
+              Contact Us
             </h4>
             <div className="space-y-3 text-xs text-[#F7F5EF]/75">
               <div className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-[#B8923D] shrink-0 mt-0.5" />
                 <span>
-                  VELMO Towers, 480 Grand Promenade, Innovation Corridor, New York & London Design Studio
+                  Plot No. 336, Ecotech-III, UK-2, Greater Noida
                 </span>
               </div>
               <div className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-[#B8923D] shrink-0" />
-                <a href="tel:8882167309" className="font-mono hover:text-[#B8923D] transition-colors">8882167309</a>
+                <a href="tel:+919643434838" className="font-mono hover:text-[#B8923D] transition-colors">+91-9643434838</a>
               </div>
               <div className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-[#B8923D] shrink-0" />

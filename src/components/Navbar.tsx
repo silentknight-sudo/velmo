@@ -95,12 +95,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuote }) => {
           {/* Zone 3: Actions */}
           <div className="hidden sm:flex items-center gap-4">
             <a
-              href="tel:8882167309"
+              href="tel:+919643434838"
               className="hidden xl:inline-flex items-center gap-2 text-xs font-medium tracking-normal transition-colors text-[#1B3B33]/80 hover:text-[#1B3B33]"
-              aria-label="Direct Phone Line: 8882167309"
+              aria-label="Direct Phone Line: +91-9643434838"
             >
               <PhoneCall className="w-3.5 h-3.5 text-[#B8923D]" />
-              <span className="font-mono text-xs">8882167309</span>
+              <span className="font-mono text-xs">+91-9643434838</span>
             </a>
 
             <button
@@ -152,7 +152,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuote }) => {
           <div className="mt-auto space-y-4 pt-6 border-t border-[#B8923D]/20">
             <div className="flex items-center justify-between text-xs text-[#F7F5EF]/70">
               <span>Architect Hotline:</span>
-              <a href="tel:8882167309" className="text-[#B8923D] font-mono">8882167309</a>
+              <a href="tel:+919643434838" className="text-[#B8923D] font-mono">+91-9643434838</a>
             </div>
             <button
               onClick={() => {

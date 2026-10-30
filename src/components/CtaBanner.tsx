@@ -42,11 +42,11 @@ export const CtaBanner: React.FC<CtaBannerProps> = ({ onOpenQuote }) => {
           </button>
 
           <a
-            href="tel:8882167309"
+            href="tel:+919643434838"
             className="px-7 py-4 bg-transparent border border-[#F7F5EF]/30 text-[#F7F5EF] font-semibold text-xs uppercase tracking-widest hover:border-[#B8923D] hover:text-[#B8923D] transition-colors flex items-center gap-2"
           >
             <PhoneCall className="w-3.5 h-3.5 text-[#B8923D]" />
-            <span className="font-mono text-xs tracking-normal">8882167309</span>
+            <span className="font-mono text-xs tracking-normal">+91-9643434838</span>
           </a>
         </div>
 
