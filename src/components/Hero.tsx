@@ -66,7 +66,7 @@ export const HERO_TYPOLOGIES: TypologyItem[] = [
     title: 'Retail',
     tagline: 'Panoramic glass lifts',
     bullets: ['13–26 persons', 'Trolley compliant'],
-    image: 'https://images.unsplash.com/photo-1567449303078-57ad995bd301?auto=format&fit=crop&w=1600&q=85',
+    image: '/assets/typologies/retail.jpg',
     productId: 'escalator',
   },
   {
